@@ -1,0 +1,111 @@
+@extends('admin.main')
+@section('title','User Tambah')
+@section('content')
+<h1>User <small class="text-muted">Tambah</small></h1>
+<hr>
+
+@if(session('result') == 'fail')
+<div class="alert alert-danger alert-dismissiable fade show">
+	<strong>Failed !</strong> Gagal disimpan.
+	<button type="button" class="close" data-dismiss="alert">
+		&times;
+	</button>
+</div>
+@endif
+
+<div class="row">
+	<div class="col-md-6">
+		<form method="POST" action="{{ route('admin.user.add') }}">
+			{{ csrf_field() }}
+			<div class="card">
+				<div class="card-header">
+					<h5>Buat User Baru</h5>
+				</div><!-- End Card Header-->	
+
+				<div class="card-body">
+					<div class="form-group form-label-group">
+						<input type="text" name="name" 
+							class="form-control {{ $errors->has('name')?'is-invalid':'' }}" 
+								value="{{ old('name') }}" 
+						id="iName" placeholder="Name" required>
+					<label for="iName">Name</label>
+					@if($errors->has('name'))
+					<div class="invalid-feedback">{{ $errors->first('name') }}</div>
+					@endif
+					<div class="form-text text-muted">
+						<small>Panjang karakter 3-100 contoh benar: Melia Wagestu, MELIA WAGESTU, meliawagestu_18</small>
+					</div>
+				</div><!-- End Form Group-->
+				
+				<div class="form-group form-label-group"> 
+					<input type="text" name="username"
+					 	class="form-control {{ $errors->has('username')?'is-invalid':'' }}"
+					 	 value="{{ old('username') }}"
+					   id="iUsername" placeholder="Username" required>
+					<label for="iUsername">Username</label>
+					@if($errors->has('username'))
+					<div class="invalid-feedback">{{ $errors->first('username') }}</div>
+					@endif
+					<div class="form-text text-muted">
+						<small>Panjang karakter 3-100 tidak boleh menggunakan spasi contoh benar:melia18, melia_18, meliawgst</small>
+					</div>
+				</div><!-- End Form Group-->
+
+				<div class="form-group form-label-group"> 
+					<input type="email" name="email"
+					 	class="form-control {{ $errors->has('email')?'is-invalid':'' }}"
+					 	 value="{{ old('email') }}"
+					   id="iEmail" placeholder="Email" required>
+					<label for="iEmail">Email</label>
+					@if($errors->has('email'))
+					<div class="invalid-feedback">{{ $errors->first('email') }}</div>
+					@endif
+				</div><!-- End Form Group-->
+				
+				<div class="form-group form-label-group">
+					<input type="password" name="password"
+						 class="form-control {{ $errors->has('password')?'is-invalid':'' }}"
+					   	id="iPassword" placeholder="Password" required>
+					<label for="iPassword">Password</label>
+					@if($errors->has('password'))
+					<div class="invalid-feedback">{{ $errors->first('password') }}</div>
+					@endif
+				</div><!-- End Form Group-->
+
+				<div class="form-group form-label-group">
+					<input type="password" name="repassword"
+						 class="form-control {{ $errors->has('repassword')?'is-invalid':'' }}"
+					   	id="iRePassword" placeholder="Re Password" required>
+					<label for="iRePassword">Re Password</label>
+					@if($errors->has('repassword'))
+					<div class="invalid-feedback">{{ $errors->first('repassword') }}</div>
+					@endif
+				</div><!-- End Form Group-->
+
+				<div class="form-group form-label-group">
+					<?php 
+					$val = old('akses');
+					 ?>
+					<select class="form-control {{ $errors->has('akses')?'is-invalid':''}}" name="akses">
+						<option value="" {{ $val==""?'selected':'' }}>Pilih Akses Sebagai :</option>
+						<option value="admin" {{ $val=="admin"?'selected':'' }}>Admin</option>
+						<option value="waiter" {{ $val=="waiter"?'selected':'' }}>Waiter</option>
+						<option value="kasir" {{ $val=="kasir"?'selected':'' }}>Kasir</option>
+						<option value="owner" {{ $val=="owner"?'selected':'' }}>Owner</option>
+						<option value="pelanggan" {{ $val=="pelanggan"?'selected':'' }}>Pelanggan</option>
+					</select>
+					@if($errors->has('akses'))
+					<div class="invalid-feedback">{{ $errors->first('akses')}}</div>
+					@endif
+				</div><!-- End Form Group-->
+	
+					</div><!-- End Card Body-->
+
+					<div class="card-footer">
+						<button class="btn btn-primary" type="submit">Simpan</button>
+					</div>
+			</div><!-- End Card-->
+		</form>
+	</div>
+</div>
+@endsection
